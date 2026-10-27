@@ -11,3 +11,13 @@
 # HTML 每次校验
 /index.html
   Cache-Control: public, max-age=0, must-revalidate
+/
+  Cache-Control: public, max-age=0, must-revalidate
+
+# SEO 与分享资源
+/robots.txt
+  Cache-Control: public, max-age=3600
+/sitemap.xml
+  Cache-Control: public, max-age=3600
+/og-cover.jpg
+  Cache-Control: public, max-age=86400

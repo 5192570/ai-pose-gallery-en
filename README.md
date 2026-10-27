@@ -13,7 +13,7 @@
 **在线演示：** <https://ai-pose-gallery.anhao.app/>
 **原始站点：** <https://ai-pose-gallery.pages.dev/>
 **原作者：** ギア（@giaaibusi）
-**中文版维护：** Anhao · [X @anhao](https://x.com/anhao)
+**中文版维护：** Anhao · [X @anhao_ai](https://x.com/anhao_ai)
 **GitHub：** <https://github.com/anhao/ai-pose-gallery-zh>
 
 ---
@@ -36,7 +36,21 @@
 - 灯箱先显示缩略图、再加载 900×1200 原图，支持直接下载 PNG、复制 ID、新窗口打开
 - `← / →` 切换角度，`↑ / ↓` 切换姿势，`Esc` 关闭；手机支持左右滑动
 - PC 多列网格、手机双列网格，移动端筛选面板可展开/收起
-- 使用指南与注意事项弹窗，页脚仅保留一个原站来源链接
+- 使用指南与注意事项弹窗，页脚标注图片来源与维护者链接
+
+## SEO 与分享
+
+页面内置了完整的 SEO 与社交分享配置：
+
+- 关键词化标题：`AI 姿势参考库｜288 组人体姿势 · 1439 张多角度参考图`
+- 独立 description、keywords、author 与 `max-image-preview:large`
+- `canonical` 指向正式域名，避免自定义域名与 pages.dev 域名重复收录
+- Open Graph / Twitter Card 使用 1200×630 的 `og-cover.jpg`
+- JSON-LD 结构化数据：`WebSite` + `ImageGallery`，声明语言、简介与页面主图
+- `robots.txt` 放行全站并声明 sitemap，`sitemap.xml` 指向首页
+- 语义结构：单一 H1、分区 H2、卡片 H3；缩略图 `alt` 含姿势名与视角，图片懒加载
+
+仓库中的绝对地址统一指向 `https://ai-pose-gallery.anhao.app/`。Fork 后如使用其他域名，需同步替换 `index.html` 的 canonical、`og:*`、`twitter:*`、JSON-LD，以及 `robots.txt`、`sitemap.xml` 中的地址。
 
 ## 数据规模
 
@@ -55,6 +69,9 @@
 ```
 .
 ├── index.html              # 单页画廊（零依赖，直接打开即可）
+├── robots.txt              # 搜索引擎抓取规则
+├── sitemap.xml             # 站点地图
+├── og-cover.jpg            # 1200×630 社交分享封面
 ├── data/
 │   ├── pose.json           # 原始日文数据（1439 条，未改动）
 │   ├── pose-zh.json        # 中文数据（前端实际读取，含检索字段）
