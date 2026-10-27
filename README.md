@@ -96,22 +96,35 @@ python3 scripts/verify.py
 
 ## 部署到 Cloudflare Pages
 
-仓库为纯静态站点，无需构建步骤。
+仓库为纯静态站点，无框架、无依赖。
 
 **方式一：GitHub 自动部署（推荐）**
 
 1. 登录 Cloudflare Dashboard → **Workers & Pages** → **Create** → **Pages** → **Connect to Git**
-2. 选择本仓库 → 分支 `main`
-3. 构建设置：**Framework preset** `None`，**Build command** 留空，**Build output directory** 填 `/`
+2. 选择本仓库 → 生产分支 `main`
+3. 构建设置照抄：
+
+   | 字段 | 值 |
+   | --- | --- |
+   | Framework preset | `None` |
+   | Build command | `bash scripts/build.sh` |
+   | Build output directory | `dist` |
+
 4. **Save and Deploy**，约 2–5 分钟得到 `https://<project>.pages.dev`
-5. 之后每次 `git push` 都会自动重新发布
+5. 之后每次 `git push` 自动重新发布
+
+> ⚠️ **不要**把 Build output directory 直接填 `/`。仓库根目录含 `.git`（数百 MB），
+> Cloudflare 会把它当静态资源扫描，pack 文件超过 25 MiB 单文件限制会导致构建失败。
+> `scripts/build.sh` 只拷贝 `index.html`、`_headers`、`data/`、`thumbs/`、`img/` 到 `dist/`。
+> 若确实想用根目录，仓库已附 `.assetsignore` 兜底排除非站点文件。
 
 > 站点限制：单文件 ≤ 25 MiB、每次部署 ≤ 20,000 个文件。本仓库最大文件 917 KB、共 2883 个文件，均在限制内。
 
 **方式二：命令行直传**
 
 ```bash
-npx wrangler pages deploy . --project-name ai-pose-gallery-zh
+bash scripts/build.sh
+npx wrangler pages deploy dist --project-name ai-pose-gallery-zh
 ```
 
 `_headers` 已为 `img/`、`thumbs/` 配置一年期强缓存，图片不会重复回源。

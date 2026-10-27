@@ -21,3 +21,6 @@ verify_failed.txt
 .vscode/
 node_modules/
 .wrangler/
+
+# 构建产物
+dist/
