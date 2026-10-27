@@ -2,9 +2,12 @@
 
 > 1439 组 AI 生成人像姿势参考图，日文数据完整汉化，附可直接部署的静态画廊。
 
+![画廊预览](docs/preview.jpg)
+
 **在线演示：** 部署到 Cloudflare Pages 后替换此处地址
 **原始站点：** <https://ai-pose-gallery.pages.dev/>
 **原作者：** <https://x.com/giaaibusi>
+**GitHub：** <https://github.com/anhao/ai-pose-gallery-zh>
 
 ---
 

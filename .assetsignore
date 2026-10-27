@@ -5,6 +5,7 @@
 .gitignore
 .workbuddy
 dist
+docs
 node_modules
 scripts
 README.md
