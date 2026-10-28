@@ -480,7 +480,7 @@ main{padding:22px 0 54px}
 (() => {
 'use strict';
 const ANGLES = ['正面', '俯视', '仰视', '侧面', '斜侧'];
-  const ANGLE_LABELS = { '正面': 'Front', '俯视': 'High angle', '仰视': 'Low angle', '侧面': 'Side', '斜侧': 'Three-quarter' };
+  const ANGLE_LABELS = { '正面': 'Front', '俯视': 'High angle', '仰视': 'Low angle', '侧面': 'Side', '斜侧': '3/4 view' };
   const angleLabel = angle => ANGLE_LABELS[angle] || angle;
 const PAGE_SIZE = { pose: 60, single: 96 };
 const state = { line: '', category: '', angle: '', query: '', view: 'pose', shown: PAGE_SIZE.pose };
