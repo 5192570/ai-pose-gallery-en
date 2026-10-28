@@ -12,14 +12,15 @@
 >
 > **Attribution and licensing:** The upstream repository states that the images and original data are not covered by its MIT license and remain the original creator's property. The MIT license applies only to the code and eligible project files; it does not grant rights to the image assets or original pose data. See [LICENSE](LICENSE) before reusing any content.
 
-![Gallery preview](docs/preview.jpg)
+## Screenshots
 
-<details>
-<summary>Mobile preview</summary>
+| Desktop — Dark mode | Desktop — Light mode |
+|:---:|:---:|
+| ![Desktop dark mode](docs/Desktop%20dark.png) | ![Desktop light mode](docs/Desktop%20light.png) |
 
-![Mobile preview](docs/mobile.jpg)
-
-</details>
+| Mobile — Dark mode | Mobile — Light mode |
+|:---:|:---:|
+| ![Mobile dark mode](docs/Moblie%20dark.png) | ![Mobile light mode](docs/Mobile%20light.png) |
 
 **Upstream live demo:** https://ai-pose-gallery.anhao.app/
 
