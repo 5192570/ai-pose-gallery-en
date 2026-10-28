@@ -22,7 +22,7 @@
 |:---:|:---:|
 | ![Mobile dark mode](docs/Moblie%20dark.png) | ![Mobile light mode](docs/Mobile%20light.png) |
 
-**Upstream live demo:** https://ai-pose-gallery.anhao.app/
+(**Original and untranslated**) upstream live demo: https://ai-pose-gallery.anhao.app/
 
 ---
 
