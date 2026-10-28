@@ -564,21 +564,21 @@ function computeList() {
 }
 
 function cardImage(item, name, number) {
-  return `<div class="card-image"><img class="main-image" src="${esc(item.缩略图)}" alt="${esc(name)} · ${esc(angleLabel(item.角度))}" loading="lazy" decoding="async"><div class="image-top"><span class="pose-no">${esc(number)}</span><span class="angle-tag">${esc(item.角度)}</span></div><span class="zoom-hint">${icon('expand')}</span></div>`;
+  return `<div class="card-image"><img class="main-image" src="${esc(item.缩略图)}" alt="${esc(name)} · ${esc(angleLabel(item.角度))}" loading="lazy" decoding="async"><div class="image-top"><span class="pose-no">${esc(number)}</span><span class="angle-tag">${esc(angleLabel(item.角度))}</span></div><span class="zoom-hint">${icon('expand')}</span></div>`;
 }
 
 function poseCard(entry, index) {
   const { group, item } = entry;
   const strip = ANGLES.filter(angle => group.angles[angle]).map(angle => {
     const angleItem = group.angles[angle];
-    return `<button class="angle-thumb${angleItem === item ? ' on' : ''}" type="button" data-angle="${esc(angle)}" title="${esc(angle)}" aria-label="查看${esc(angle)}视角"><img src="${esc(angleItem.缩略图)}" alt="" loading="lazy" decoding="async"><span>${esc(angleLabel(angle))}</span></button>`;
+    return `<button class="angle-thumb${angleItem === item ? ' on' : ''}" type="button" data-angle="${esc(angle)}" title="${esc(angleLabel(angle))}" aria-label="View ${esc(angleLabel(angle))} angle"><img src="${esc(angleItem.缩略图)}" alt="" loading="lazy" decoding="async"><span>${esc(angleLabel(angle))}</span></button>`;
   }).join('');
-  return `<article class="pose-card" tabindex="0" data-index="${index}" aria-label="${esc(group.name)}，${esc(item.角度)}视角">${cardImage(item, group.name, group.number)}<div class="card-body"><h3>${esc(group.name)}</h3><div class="card-meta"><span class="system">${esc(group.system)}</span><span class="meta-dot">·</span><span class="category">${esc(group.category)}</span></div></div><div class="angle-strip">${strip}</div></article>`;
+  return `<article class="pose-card" tabindex="0" data-index="${index}" aria-label="${esc(group.name)}, ${esc(angleLabel(item.角度))} angle">${cardImage(item, group.name, group.number)}<div class="card-body"><h3>${esc(group.name)}</h3><div class="card-meta"><span class="system">${esc(group.system)}</span><span class="meta-dot">·</span><span class="category">${esc(group.category)}</span></div></div><div class="angle-strip">${strip}</div></article>`;
 }
 
 function singleCard(entry, index) {
   const { item } = entry;
-  return `<article class="pose-card" tabindex="0" data-index="${index}" aria-label="${esc(item.姿势名称)}，${esc(item.角度)}视角">${cardImage(item, item.姿势名称, item.姿势编号)}<div class="card-body"><h3>${esc(item.姿势名称)}</h3><div class="card-meta"><span class="system">${esc(item.体系)}</span><span class="meta-dot">·</span><span class="category">${esc(item.分类)}</span></div><code class="card-id">${esc(item.id)}</code></div></article>`;
+  return `<article class="pose-card" tabindex="0" data-index="${index}" aria-label="${esc(item.姿势名称)}, ${esc(angleLabel(item.角度))} angle">${cardImage(item, item.姿势名称, item.姿势编号)}<div class="card-body"><h3>${esc(item.姿势名称)}</h3><div class="card-meta"><span class="system">${esc(item.体系)}</span><span class="meta-dot">·</span><span class="category">${esc(item.分类)}</span></div><code class="card-id">${esc(item.id)}</code></div></article>`;
 }
 
 function syncControls() {
@@ -813,7 +813,7 @@ function showViewer() {
   $('#viewerMeta').innerHTML = [['Collection', item.体系], ['Pose number', item.姿势编号 || '—'], ['Category', item.分类 || '—'], ['Viewing angle', angleLabel(item.角度) || '—'], ['Image size', '900 × 1200 PNG']].map(([key, value]) => `<dt>${key}</dt><dd>${esc(value)}</dd>`).join('');
   $('#viewerAngles').innerHTML = ANGLES.filter(angle => group.angles[angle]).map(angle => {
     const angleItem = group.angles[angle];
-    return `<button class="angle-thumb${angleItem === item ? ' on' : ''}" type="button" data-angle="${esc(angle)}" aria-label="Switch to ${esc(angleLabel(angle))}"><img src="${esc(angleItem.缩略图)}" alt="${esc(angle)}"><span>${esc(angleLabel(angle))}</span></button>`;
+    return `<button class="angle-thumb${angleItem === item ? ' on' : ''}" type="button" data-angle="${esc(angle)}" aria-label="Switch to ${esc(angleLabel(angle))}"><img src="${esc(angleItem.缩略图)}" alt="${esc(angleLabel(angle))}"><span>${esc(angleLabel(angle))}</span></button>`;
   }).join('');
   const download = $('#downloadImage');
   download.href = item.原图;
