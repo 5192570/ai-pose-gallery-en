@@ -113,6 +113,15 @@
 :root[data-theme="dark"] .info-note{background:#201b10;color:#e6c77d}
 :root[data-theme="dark"] .skeleton .card-image,:root[data-theme="dark"] .skeleton-line{background:linear-gradient(90deg,#111 25%,#1b1b1b 50%,#111 75%);background-size:200% 100%}
 :root[data-theme="dark"] .search-key{border-color:#383838}
+
+/* Keep segmented controls readable on the AMOLED theme. */
+:root[data-theme="dark"] .segmented{background:#101010;border-color:#484848}
+:root[data-theme="dark"] .segmented button{color:#c5c7d0;background:transparent}
+:root[data-theme="dark"] .segmented button:hover{color:#fff;background:#1c1c1c}
+:root[data-theme="dark"] .segmented button[aria-pressed="true"]{background:#a9a3ff;color:#090909;box-shadow:none}
+:root[data-theme="dark"] .segmented button:focus-visible{outline:2px solid #c7c2ff;outline-offset:1px}
+:root[data-theme="dark"] .download-btn{background:#a9a3ff;border-color:#a9a3ff;color:#080808}
+:root[data-theme="dark"] .download-btn:hover{background:#c0bcff;border-color:#c0bcff;color:#080808}
 .theme-toggle{height:38px;padding:0 11px;border:1px solid var(--line);border-radius:9px;background:var(--surface);color:var(--text-2);display:inline-flex;align-items:center;justify-content:center;gap:7px;cursor:pointer;font-size:12px;font-weight:700}
 .theme-toggle:hover{background:var(--surface-2);color:var(--text);border-color:var(--line-strong)}
 .theme-toggle svg{width:16px;height:16px}
