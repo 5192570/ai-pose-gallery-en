@@ -37,6 +37,15 @@ The upstream implementation provides:
 2. **Translated metadata** — the upstream Chinese version maps the Japanese labels to Chinese across 4 systems, 26 categories, 288 pose names, and 5 viewing angles.
 3. **A responsive, dependency-free gallery** — category filters, multi-angle switching, grouped browsing, lightbox navigation, and full-size image downloads, with a layout adapted for mobile.
 
+## Additional features
+
+This English edition adds a few improvements for everyday browsing:
+
+- **Enhanced search:** clearer English pose titles make references easier to find. Search across pose names, pose numbers/IDs, and category keywords, then narrow results by collection, category, and viewing angle.
+- **AMOLED-friendly dark mode:** switch between light and dark themes from the header. Dark mode uses a true-black (`#000000`) main background, with contrasting dark surfaces and readable controls.
+- **Remembered appearance:** the selected theme is saved in the browser, and first-time visitors follow their device's light/dark preference.
+- **Responsive layouts:** the gallery and its filters adapt to desktop and mobile screens.
+
 ## Features
 
 - Four system tabs showing image and pose-group counts.
