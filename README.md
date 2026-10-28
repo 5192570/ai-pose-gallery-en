@@ -79,6 +79,8 @@ Each record may include some of five viewing angles: front, oblique, side, top-d
 ```text
 .
 ├── index.html                # Single-page gallery
+├── launch.bat                # Windows local launcher
+├── launch.sh                 # macOS/Linux local launcher
 ├── robots.txt                # Search engine crawling rules
 ├── sitemap.xml               # Sitemap
 ├── og-cover.jpg              # 1200 × 630 social-sharing image
@@ -94,6 +96,7 @@ Each record may include some of five viewing angles: front, oblique, side, top-d
 │   ├── download.py           # Concurrent downloader with resume/retry support
 │   ├── i18n.py               # Japanese-to-Chinese translation mappings
 │   ├── apply_translation.py  # Applies translations to generate Chinese data
+│   ├── serve.py              # Local development server
 │   ├── verify.py             # Checks file presence, size, and image headers
 │   └── build.sh              # Prepares the Cloudflare Pages dist/ directory
 ├── docs/                     # README preview images
@@ -124,8 +127,17 @@ The upstream keeps `data/pose.json` in its original Japanese schema for comparis
 
 The gallery loads JSON through `fetch`, so serve it over HTTP. Opening `index.html` directly from the filesystem may fail because of browser CORS restrictions.
 
+**Quick launch (recommended):**
+
+- **Windows:** double-click `launch.bat`.
+- **macOS/Linux:** run `./launch.sh` from a terminal. If needed, make it executable first with `chmod +x launch.sh`.
+
+The launcher checks for Python 3, starts a local server bound to `127.0.0.1`, opens the gallery in your default browser, and tries ports 8000–8010 if the default port is already in use. Keep the terminal/window open while using the gallery; press `Ctrl+C` in the terminal or close the launcher window to stop the server.
+
+**Manual alternative:**
+
 ```bash
-python3 -m http.server 8000
+python3 -m http.server 8000 --bind 127.0.0.1
 # Open http://127.0.0.1:8000
 ```
 
@@ -189,4 +201,3 @@ The gallery contains adult-oriented pose references, and some category labels re
 - This repository is an independent English-oriented fork/implementation of the upstream project. It is not the original project and is not presented as an official release by the original creator.
 - The upstream repository's MIT license covers eligible source code and project files only. It **does not cover** the images in `img/` and `thumbs/`, or the original pose data in `data/`. The upstream license states that these assets remain the original creator's property and are not authorized for commercial use under that license.
 - Please review [LICENSE](LICENSE) and the original project's terms before reusing, redistributing, or commercially using any assets. This README does not grant additional rights to third-party content.
-
