@@ -1,182 +1,192 @@
-# AI Pose Gallery · 中文版
+# AI Pose Gallery — English Edition
 
-> 288 组 / 1439 张 AI 人体姿势参考图，日文数据完整汉化，附可直接部署的响应式静态画廊。
+> A static, responsive gallery of AI pose references: 288 pose groups, 1,439 records, and 2,878 reference images.
 
-![画廊预览](docs/preview.jpg)
+> [!IMPORTANT]
+> **English-language fork of the original project.** This repository is an English-oriented implementation based on [Anhao's `ai-pose-gallery-zh`](https://github.com/anhao/ai-pose-gallery-zh), which adapts the original Japanese pose gallery into a self-hostable static gallery. The original pose references and source data belong to the original creator, **ギア (@giaaibusi)**. Please also credit the original site and project when redistributing or adapting this work.
+>
+> - Original site: https://ai-pose-gallery.pages.dev/
+> - Original creator: [ギア (@giaaibusi)](https://x.com/giaaibusi)
+> - Upstream repository and Chinese implementation: [anhao/ai-pose-gallery-zh](https://github.com/anhao/ai-pose-gallery-zh)
+> - Upstream maintainer: [Anhao (@anhao_ai)](https://x.com/anhao_ai)
+>
+> **Attribution and licensing:** The upstream repository states that the images and original data are not covered by its MIT license and remain the original creator's property. The MIT license applies only to the code and eligible project files; it does not grant rights to the image assets or original pose data. See [LICENSE](LICENSE) before reusing any content.
 
-<details><summary>手机端预览</summary>
+![Gallery preview](docs/preview.jpg)
 
-![手机端预览](docs/mobile.jpg)
+<details>
+<summary>Mobile preview</summary>
+
+![Mobile preview](docs/mobile.jpg)
 
 </details>
 
-**在线演示：** <https://ai-pose-gallery.anhao.app/>
-**原始站点：** <https://ai-pose-gallery.pages.dev/>
-**原作者：** ギア（@giaaibusi）
-**中文版维护：** Anhao · [X @anhao_ai](https://x.com/anhao_ai)
-**GitHub：** <https://github.com/anhao/ai-pose-gallery-zh>
+**Upstream live demo:** https://ai-pose-gallery.anhao.app/
 
 ---
 
-## 这是什么
+## Overview
 
-原站是一套面向 AI 绘画 / 3D / 摄影参考的姿势图库，元数据全部为日文，且不提供批量素材下载。本仓库做了三件事：
+The original gallery provides pose references for AI illustration, 3D work, and photography. Its source metadata is in Japanese, and the original site does not provide a bulk asset download. The upstream Chinese implementation packages the gallery as a responsive static site and includes a translated metadata dataset.
 
-1. **全量镜像** —— 1439 条记录对应的 1439 张缩略图（JPG 300×400）与 1439 张原图（PNG 900×1200）全部落地，共 2878 个文件 / 659.5 MB。
-2. **完整汉化** —— 日文字段逐条译为中文，覆盖 4 个体系、26 个分类、288 个姿势名、5 个视角，零遗漏。
-3. **可用的前端** —— 零依赖响应式画廊，完整实现原站的分类筛选、多角度切换、分组浏览、灯箱导航与原图下载，并针对手机重新设计布局。
+This repository is intended to make that project accessible to English-speaking users. The current code and data are inherited from the upstream implementation; English localization of the frontend and pose metadata may be ongoing.
 
-## 页面功能
+The upstream implementation provides:
 
-- 4 个体系页签，显示各体系的图片数与姿势组数
-- 姿势名、编号、ID、分类关键词搜索，支持 `/` 快速聚焦
-- 动作分类、5 种视角组合筛选，可一键重置
-- **按姿势分组 / 逐张浏览**双模式，分组卡片带多角度缩略图
-- 悬停或点击缩略图切换主图角度，点击卡片打开灯箱
-- 灯箱先显示缩略图、再加载 900×1200 原图，支持直接下载 PNG、复制 ID、新窗口打开
-- `← / →` 切换角度，`↑ / ↓` 切换姿势，`Esc` 关闭；手机支持左右滑动
-- PC 多列网格、手机双列网格，移动端筛选面板可展开/收起
-- 使用指南与注意事项弹窗，页脚标注图片来源与维护者链接
+1. **A local asset mirror** — 1,439 JPG thumbnails (300 × 400) and 1,439 full-size PNG images (900 × 1200), for 2,878 files and approximately 659.5 MB.
+2. **Translated metadata** — the upstream Chinese version maps the Japanese labels to Chinese across 4 systems, 26 categories, 288 pose names, and 5 viewing angles.
+3. **A responsive, dependency-free gallery** — category filters, multi-angle switching, grouped browsing, lightbox navigation, and full-size image downloads, with a layout adapted for mobile.
 
-## SEO 与分享
+## Features
 
-页面内置了完整的 SEO 与社交分享配置：
+- Four system tabs showing image and pose-group counts.
+- Search by pose name, pose number, ID, or category keywords; press `/` to focus the search field.
+- Combined filters for pose category and five viewing angles, with a one-click reset.
+- **Grouped and individual browsing modes.** Group cards show thumbnails from multiple angles.
+- Hover or click thumbnails to change the main viewing angle; click a card to open the lightbox.
+- The lightbox displays a thumbnail first and then loads the 900 × 1200 original. Download PNGs, copy the pose ID, or open an image in a new window.
+- Keyboard controls: `←` / `→` change angles, `↑` / `↓` change poses, and `Esc` closes the lightbox. Mobile devices support horizontal swipes.
+- Multi-column desktop grid and two-column mobile grid, with a collapsible mobile filter panel.
+- Guide and notice dialogs, plus image-source and maintainer links in the footer.
 
-- 关键词化标题：`AI 姿势参考库｜288 组人体姿势 · 1439 张多角度参考图`
-- 独立 description、keywords、author 与 `max-image-preview:large`
-- `canonical` 指向正式域名，避免自定义域名与 pages.dev 域名重复收录
-- Open Graph / Twitter Card 使用 1200×630 的 `og-cover.jpg`
-- JSON-LD 结构化数据：`WebSite` + `ImageGallery`，声明语言、简介与页面主图
-- `robots.txt` 放行全站并声明 sitemap，`sitemap.xml` 指向首页
-- 语义结构：单一 H1、分区 H2、卡片 H3；缩略图 `alt` 含姿势名与视角，图片懒加载
+## SEO and social sharing
 
-仓库中的绝对地址统一指向 `https://ai-pose-gallery.anhao.app/`。Fork 后如使用其他域名，需同步替换 `index.html` 的 canonical、`og:*`、`twitter:*`、JSON-LD，以及 `robots.txt`、`sitemap.xml` 中的地址。
+The upstream page includes SEO and social-sharing metadata:
 
-## 数据规模
+- Descriptive page title, meta description, keywords, author, and `max-image-preview:large`.
+- A canonical URL to avoid duplicate indexing across custom and `pages.dev` domains.
+- Open Graph and Twitter Card metadata using the 1200 × 630 `og-cover.jpg` image.
+- JSON-LD structured data for `WebSite` and `ImageGallery`.
+- `robots.txt` and `sitemap.xml`.
+- Semantic headings, descriptive thumbnail alt text, and lazy-loaded images.
 
-| 体系 | 条数 |
+**When deploying your own fork:** update the canonical URL, `og:*` and `twitter:*` metadata, JSON-LD, `robots.txt`, and `sitemap.xml` in line with your own deployment domain. The inherited metadata may still point to the upstream site.
+
+## Dataset
+
+| System (upstream Chinese labels) | Records |
 | --- | ---: |
-| 全身单人・标准系 | 365 |
-| 全身单人・性感系 | 399 |
-| 上半身单人 | 400 |
-| 双人缠绵 | 275 |
-| **合计** | **1439** |
+| Full-body, solo · standard | 365 |
+| Full-body, solo · sexy | 399 |
+| Upper-body, solo | 400 |
+| Two-person interaction | 275 |
+| **Total** | **1,439** |
 
-每条记录对应 5 个视角中的若干个：正面 / 斜侧 / 侧面 / 俯视 / 仰视。
+Each record may include some of five viewing angles: front, oblique, side, top-down, and bottom-up.
 
-## 目录结构
+## Repository structure
 
-```
+```text
 .
-├── index.html              # 单页画廊（零依赖，直接打开即可）
-├── robots.txt              # 搜索引擎抓取规则
-├── sitemap.xml             # 站点地图
-├── og-cover.jpg            # 1200×630 社交分享封面
+├── index.html                # Single-page gallery
+├── robots.txt                # Search engine crawling rules
+├── sitemap.xml               # Sitemap
+├── og-cover.jpg              # 1200 × 630 social-sharing image
 ├── data/
-│   ├── pose.json           # 原始日文数据（1439 条，未改动）
-│   ├── pose-zh.json        # 中文数据（前端实际读取，含检索字段）
-│   ├── meta.json           # 原始体系分类
-│   ├── meta-zh.json        # 中文体系分类
-│   └── translations.csv    # 日⇄中对照表（323 条，便于校对）
-├── thumbs/                 # 缩略图 1439 张 JPG 300×400（22 MB）
-├── img/                    # 原图 1439 张 PNG 900×1200（637 MB）
+│   ├── pose.json             # Original Japanese data (1,439 records)
+│   ├── pose-zh.json          # Chinese data used by the inherited frontend
+│   ├── meta.json             # Original system/category metadata
+│   ├── meta-zh.json          # Chinese system/category metadata
+│   └── translations.csv      # Japanese–Chinese mapping (323 unique entries)
+├── thumbs/                   # 1,439 JPG thumbnails (300 × 400; ~22 MB)
+├── img/                      # 1,439 full-size PNGs (900 × 1200; ~637 MB)
 ├── scripts/
-│   ├── download.py         # 并发下载器（48 线程 / 断点续传 / 自动重试）
-│   ├── i18n.py             # 日译中词典（唯一值去重后的 323 条译文）
-│   ├── apply_translation.py# 回填译文，生成中文数据
-│   ├── verify.py           # 校验文件完整性（存在性 / 大小 / 图片头）
-│   └── build.sh            # 生成 Cloudflare Pages 发布目录 dist/
-├── docs/                   # README 页面预览图
-├── _headers                # Cloudflare Pages 缓存策略
+│   ├── download.py           # Concurrent downloader with resume/retry support
+│   ├── i18n.py               # Japanese-to-Chinese translation mappings
+│   ├── apply_translation.py  # Applies translations to generate Chinese data
+│   ├── verify.py             # Checks file presence, size, and image headers
+│   └── build.sh              # Prepares the Cloudflare Pages dist/ directory
+├── docs/                     # README preview images
+├── _headers                  # Cloudflare Pages cache rules
 ├── LICENSE
 └── README.md
 ```
 
-## 数据结构
+## Data schema
 
-`data/pose-zh.json` 字段说明：
+The inherited frontend reads `data/pose-zh.json`. Its fields include:
 
-| 字段 | 原日文字段 | 示例 | 说明 |
+| Field | Original Japanese field | Example | Description |
 | --- | --- | --- | --- |
-| `id` | — | `full_sexy_P001_front` | 唯一标识 |
-| `体系` | `系統` | 全身单人・性感系 | 4 大类 |
-| `姿势编号` | `ポーズ番号` | `P001` | 80 组编号 |
-| `分类` | `分類` | 站姿 | 26 类动作 |
-| `姿势名称` | `ポーズ名` | S形站姿・胯部侧顶 | 288 种描述 |
-| `角度` | `アングル` | 正面 | 5 种视角 |
-| `缩略图` | `サムネ` | `thumbs/…jpg` | 相对路径 |
-| `原图` | `原寸` | `img/…png` | 相对路径 |
-| `检索` | — | 拼接串 | 供前端模糊搜索 |
+| `id` | — | `full_sexy_P001_front` | Unique identifier |
+| `体系` | `系統` | Full-body, solo · sexy | One of four systems |
+| `姿势编号` | `ポーズ番号` | `P001` | Pose/group number |
+| `分类` | `分類` | Standing | One of 26 categories |
+| `姿势名称` | `ポーズ名` | S-shaped standing pose | Pose description |
+| `角度` | `アングル` | Front | Viewing angle |
+| `缩略图` | `サムネ` | `thumbs/…jpg` | Relative thumbnail path |
+| `原图` | `原寸` | `img/…png` | Relative full-size image path |
+| `检索` | — | Combined text | Search text used by the frontend |
 
-原始日文数据 `data/pose.json` 保持原样，字段名与站点接口一致，便于对照或回灌。
+The upstream keeps `data/pose.json` in its original Japanese schema for comparison and for regenerating translated data. The file names and field names shown above reflect the inherited upstream implementation and may change as the English localization develops.
 
-## 本地预览
+## Run locally
 
-画廊通过 `fetch` 读取 JSON，需要 HTTP 环境（直接双击 `index.html` 会被 CORS 拦截）：
+The gallery loads JSON through `fetch`, so serve it over HTTP. Opening `index.html` directly from the filesystem may fail because of browser CORS restrictions.
 
 ```bash
 python3 -m http.server 8000
-# 打开 http://127.0.0.1:8000
+# Open http://127.0.0.1:8000
 ```
 
-页面支持体系/分类/视角组合筛选、关键词搜索、分组与逐张浏览、多角度缩略图、懒加载、灯箱原图下载、键盘与触屏导航。
+The inherited page supports combined system/category/angle filters, keyword search, grouped or individual browsing, multi-angle thumbnails, lazy loading, full-size image downloads in the lightbox, and keyboard/touch navigation.
 
-## 脚本用法
+## Scripts
 
 ```bash
-# 重新拉取全部图片（已存在的文件自动跳过，可反复执行）
+# Download images; existing files are skipped, so the command can be rerun.
 python3 scripts/download.py
-WORKERS=64 python3 scripts/download.py   # 调整并发
+WORKERS=64 python3 scripts/download.py   # Adjust concurrency
 
-# 修改 scripts/i18n.py 中的译文后，重新生成中文数据
+# After editing scripts/i18n.py, regenerate the Chinese dataset.
 python3 scripts/apply_translation.py
 
-# 校验 2878 个文件是否完整
+# Verify all 2,878 image files.
 python3 scripts/verify.py
 ```
 
-## 部署到 Cloudflare Pages
+## Deploy to Cloudflare Pages
 
-仓库为纯静态站点，无框架、无依赖。
+This is a static site without a framework or runtime dependencies.
 
-**方式一：GitHub 自动部署（推荐）**
+### Option 1: Automatic deployment through GitHub (recommended)
 
-1. 登录 Cloudflare Dashboard → **Workers & Pages** → **Create** → **Pages** → **Connect to Git**
-2. 选择本仓库 → 生产分支 `main`
-3. 构建设置照抄：
+1. Sign in to the Cloudflare Dashboard and open **Workers & Pages → Create → Pages → Connect to Git**.
+2. Select this repository and the production branch, `main`.
+3. Use these build settings:
 
-   | 字段 | 值 |
+   | Setting | Value |
    | --- | --- |
    | Framework preset | `None` |
    | Build command | `bash scripts/build.sh` |
    | Build output directory | `dist` |
 
-4. **Save and Deploy**，约 2–5 分钟得到 `https://<project>.pages.dev`
-5. 之后每次 `git push` 自动重新发布
+4. Select **Save and Deploy**. After a few minutes, Cloudflare will provide a `https://<project>.pages.dev` address.
+5. Subsequent `git push` operations trigger a new deployment automatically.
 
-> ⚠️ **不要**把 Build output directory 直接填 `/`。仓库根目录含 `.git`（数百 MB），
-> Cloudflare 会把它当静态资源扫描，pack 文件超过 25 MiB 单文件限制会导致构建失败。
-> `scripts/build.sh` 只拷贝 `index.html`、`_headers`、`data/`、`thumbs/`、`img/` 到 `dist/`。
-> 若确实想用根目录，仓库已附 `.assetsignore` 兜底排除非站点文件。
+> [!WARNING]
+> Do **not** set the build output directory to `/`. The repository root contains Git data and other large files. Cloudflare may scan them as static assets, and files larger than its 25 MiB per-file limit can cause deployment to fail. `scripts/build.sh` copies only the required site files into `dist/`.
 
-> 站点限制：单文件 ≤ 25 MiB、每次部署 ≤ 20,000 个文件。本仓库最大文件 917 KB、共 2883 个文件，均在限制内。
+The upstream documentation notes a 25 MiB per-file limit and a 20,000-file deployment limit. Its largest file is approximately 917 KB, and the built site contains about 2,883 files.
 
-**方式二：命令行直传**
+### Option 2: Deploy from the command line
 
 ```bash
 bash scripts/build.sh
-npx wrangler pages deploy dist --project-name ai-pose-gallery-zh
+npx wrangler pages deploy dist --project-name ai-pose-gallery-en
 ```
 
-`_headers` 已为 `img/`、`thumbs/` 配置一年期强缓存，图片不会重复回源。
+The inherited `_headers` file configures one-year browser caching for files under `img/` and `thumbs/`.
 
-## 内容提示
+## Content notice
 
-图库包含成人向姿势参考（部分分类名称涉及性行为术语），仅供艺术创作、动作参考与前端技术学习使用。请勿用于违法用途。未成年人请勿访问。
+The gallery contains adult-oriented pose references, and some category labels refer to sexual activity. It is intended for artistic creation, pose reference, and frontend development study. Do not use it for unlawful purposes. Minors should not access this content.
 
-## 版权与致谢
+## Credits and rights
 
-- **图片与原始数据的著作权归原作者ギア所有**，来源地址见页首
-- 本仓库仅为个人学习、汉化与静态站点实践存档，**不对图片主张任何权利**，也不构成对原作品的商业使用授权
-- 若原作者认为本仓库侵犯其权益，请通过 Issue 联系，将立即删除相关内容
-- `scripts/` 与 `index.html` 的代码以 MIT 协议开源（见 [LICENSE](LICENSE)），该协议**不覆盖** `img/`、`thumbs/` 与 `data/` 中的图片和原始数据
+- **Original pose images and original source data:** © ギア ([X: @giaaibusi](https://x.com/giaaibusi)). The original site is https://ai-pose-gallery.pages.dev/.
+- **Upstream gallery and Chinese implementation:** [Anhao / anhao/ai-pose-gallery-zh](https://github.com/anhao/ai-pose-gallery-zh). Maintainer: [@anhao_ai](https://x.com/anhao_ai).
+- This repository is an independent English-oriented fork/implementation of the upstream project. It is not the original project and is not presented as an official release by the original creator.
+- The upstream repository's MIT license covers eligible source code and project files only. It **does not cover** the images in `img/` and `thumbs/`, or the original pose data in `data/`. The upstream license states that these assets remain the original creator's property and are not authorized for commercial use under that license.
+- Please review [LICENSE](LICENSE) and the original project's terms before reusing, redistributing, or commercially using any assets. This README does not grant additional rights to third-party content.
+
