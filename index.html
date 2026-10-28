@@ -480,6 +480,8 @@ main{padding:22px 0 54px}
 (() => {
 'use strict';
 const ANGLES = ['正面', '俯视', '仰视', '侧面', '斜侧'];
+  const ANGLE_LABELS = { '正面': 'Front', '俯视': 'High angle', '仰视': 'Low angle', '侧面': 'Side', '斜侧': 'Three-quarter' };
+  const angleLabel = angle => ANGLE_LABELS[angle] || angle;
 const PAGE_SIZE = { pose: 60, single: 96 };
 const state = { line: '', category: '', angle: '', query: '', view: 'pose', shown: PAGE_SIZE.pose };
 const $ = selector => document.querySelector(selector);
@@ -530,17 +532,17 @@ function prepareData(data) {
 }
 
 function renderTabs() {
-  const tabs = [['', '全部', DATA.length, GROUPS.length], ...LINES.map(line => [line, line, DATA.filter(item => item.体系 === line).length, GROUPS.filter(group => group.system === line).length])];
-  $('#lineTabs').innerHTML = tabs.map(([value, label, images, poses]) => `<button class="line-tab" type="button" role="tab" data-line="${esc(value)}" aria-selected="${state.line === value}"><span class="tab-name">${esc(label)}</span><span class="tab-count">${format(images)} 张 · ${format(poses)} 组</span></button>`).join('');
+  const tabs = [['', 'All collections', DATA.length, GROUPS.length], ...LINES.map(line => [line, line, DATA.filter(item => item.体系 === line).length, GROUPS.filter(group => group.system === line).length])];
+  $('#lineTabs').innerHTML = tabs.map(([value, label, images, poses]) => `<button class="line-tab" type="button" role="tab" data-line="${esc(value)}" aria-selected="${state.line === value}"><span class="tab-name">${esc(label)}</span><span class="tab-count">${format(images)} images · ${format(poses)} poses</span></button>`).join('');
 }
 
 function renderCategoryOptions() {
   const categories = [...new Set(DATA.filter(item => !state.line || item.体系 === state.line).map(item => item.分类).filter(Boolean))].sort((a, b) => a.localeCompare(b, 'zh-CN'));
-  $('#categorySelect').innerHTML = '<option value="">全部分类</option>' + categories.map(category => `<option value="${esc(category)}"${state.category === category ? ' selected' : ''}>${esc(category)}</option>`).join('');
+  $('#categorySelect').innerHTML = '<option value="">All categories</option>' + categories.map(category => `<option value="${esc(category)}"${state.category === category ? ' selected' : ''}>${esc(category)}</option>`).join('');
 }
 
 function renderAngleFilter() {
-  $('#angleFilter').innerHTML = ['', ...ANGLES].map(angle => `<button type="button" data-angle="${esc(angle)}" aria-pressed="${state.angle === angle}">${angle || '全部视角'}</button>`).join('');
+  $('#angleFilter').innerHTML = ['', ...ANGLES].map(angle => `<button type="button" data-angle="${esc(angle)}" aria-pressed="${state.angle === angle}">${angle ? angleLabel(angle) : 'All angles'}</button>`).join('');
 }
 
 function hit(item) {
@@ -562,14 +564,14 @@ function computeList() {
 }
 
 function cardImage(item, name, number) {
-  return `<div class="card-image"><img class="main-image" src="${esc(item.缩略图)}" alt="${esc(name)} · ${esc(item.角度)}" loading="lazy" decoding="async"><div class="image-top"><span class="pose-no">${esc(number)}</span><span class="angle-tag">${esc(item.角度)}</span></div><span class="zoom-hint">${icon('expand')}</span></div>`;
+  return `<div class="card-image"><img class="main-image" src="${esc(item.缩略图)}" alt="${esc(name)} · ${esc(angleLabel(item.角度))}" loading="lazy" decoding="async"><div class="image-top"><span class="pose-no">${esc(number)}</span><span class="angle-tag">${esc(item.角度)}</span></div><span class="zoom-hint">${icon('expand')}</span></div>`;
 }
 
 function poseCard(entry, index) {
   const { group, item } = entry;
   const strip = ANGLES.filter(angle => group.angles[angle]).map(angle => {
     const angleItem = group.angles[angle];
-    return `<button class="angle-thumb${angleItem === item ? ' on' : ''}" type="button" data-angle="${esc(angle)}" title="${esc(angle)}" aria-label="查看${esc(angle)}视角"><img src="${esc(angleItem.缩略图)}" alt="" loading="lazy" decoding="async"><span>${esc(angle)}</span></button>`;
+    return `<button class="angle-thumb${angleItem === item ? ' on' : ''}" type="button" data-angle="${esc(angle)}" title="${esc(angle)}" aria-label="查看${esc(angle)}视角"><img src="${esc(angleItem.缩略图)}" alt="" loading="lazy" decoding="async"><span>${esc(angleLabel(angle))}</span></button>`;
   }).join('');
   return `<article class="pose-card" tabindex="0" data-index="${index}" aria-label="${esc(group.name)}，${esc(item.角度)}视角">${cardImage(item, group.name, group.number)}<div class="card-body"><h3>${esc(group.name)}</h3><div class="card-meta"><span class="system">${esc(group.system)}</span><span class="meta-dot">·</span><span class="category">${esc(group.category)}</span></div></div><div class="angle-strip">${strip}</div></article>`;
 }
@@ -590,12 +592,12 @@ function syncControls() {
 
 function renderActiveFilters() {
   const filters = [];
-  if (state.line) filters.push(['line', `体系：${state.line}`]);
-  if (state.category) filters.push(['category', `分类：${state.category}`]);
-  if (state.angle) filters.push(['angle', `视角：${state.angle}`]);
-  if (state.query) filters.push(['query', `搜索：${state.query}`]);
-  if (state.view === 'single') filters.push(['view', '逐张浏览']);
-  $('#activeFilters').innerHTML = filters.map(([key, label]) => `<button class="filter-chip" type="button" data-clear="${key}" title="移除此筛选">${esc(label)}</button>`).join('');
+  if (state.line) filters.push(['line', `Collection: ${state.line}`]);
+  if (state.category) filters.push(['category', `Category: ${state.category}`]);
+  if (state.angle) filters.push(['angle', `Angle: ${angleLabel(state.angle)}`]);
+  if (state.query) filters.push(['query', `Search: ${state.query}`]);
+  if (state.view === 'single') filters.push(['view', 'Browse images']);
+  $('#activeFilters').innerHTML = filters.map(([key, label]) => `<button class="filter-chip" type="button" data-clear="${key}" title="Remove this filter">${esc(label)}</button>`).join('');
 }
 
 function render(append = false) {
@@ -611,18 +613,18 @@ function render(append = false) {
 
   if (state.view === 'pose') {
     const images = currentList.reduce((sum, entry) => sum + entry.matched, 0);
-    $('#resultCount').textContent = `${format(total)} 组姿势 · ${format(images)} 张图片`;
+    $('#resultCount').textContent = `${format(total)} pose sets · ${format(images)} images`;
   } else {
-    $('#resultCount').textContent = `${format(total)} 张图片`;
+    $('#resultCount').textContent = `${format(total)} images`;
   }
-  $('#visibleCount').textContent = total > state.shown ? `已显示 ${format(renderedCount)} / ${format(total)} ${state.view === 'pose' ? '组' : '张'}` : `共 ${format(total)} ${state.view === 'pose' ? '组' : '张'}`;
+  $('#visibleCount').textContent = total > state.shown ? `Showing ${format(renderedCount)} of ${format(total)} ${state.view === 'pose' ? 'pose sets' : 'images'}` : `${format(total)} ${state.view === 'pose' ? 'pose sets' : 'images'} total`;
 
   if (!total) {
-    grid.innerHTML = `<div class="empty"><div class="empty-icon">${icon('search')}</div><h3>没有找到匹配的姿势</h3><p>试试更换关键词或减少筛选条件。</p><button type="button" id="emptyReset">清除全部筛选</button></div>`;
+    grid.innerHTML = `<div class="empty"><div class="empty-icon">${icon('search')}</div><h3>No matching poses found</h3><p>Try another search term or remove some filters.</p><button type="button" id="emptyReset">Clear all filters</button></div>`;
   }
   const more = $('#loadMore');
   more.hidden = renderedCount >= total || !total;
-  more.textContent = `加载更多（剩余 ${format(total - renderedCount)} ${state.view === 'pose' ? '组' : '张'}）`;
+  more.textContent = `Load more (${format(total - renderedCount)} ${state.view === 'pose' ? 'pose sets' : 'images'} remaining)`;
   syncControls();
   renderActiveFilters();
 }
@@ -650,7 +652,7 @@ function updateCardPreview(card, entry) {
   image.src = item.缩略图;
   image.alt = `${entry.group.name} · ${item.角度}`;
   card.querySelector('.angle-tag').textContent = item.角度;
-  card.setAttribute('aria-label', `${entry.group.name}，${item.角度}视角`);
+  card.setAttribute('aria-label', `${entry.group.name}, ${angleLabel(item.角度)} angle`);
   card.querySelectorAll('.angle-thumb').forEach(button => button.classList.toggle('on', button.dataset.angle === item.角度));
 }
 
@@ -785,7 +787,7 @@ function showViewer() {
   image.src = item.缩略图;
   image.alt = `${item.姿势名称} · ${item.角度}`;
   image.classList.add('is-loading');
-  $('#imageStatus').textContent = '正在加载原图…';
+  $('#imageStatus').textContent = 'Loading original image…';
   $('#imageStatus').hidden = false;
   const full = new Image();
   full.decoding = 'async';
@@ -798,7 +800,7 @@ function showViewer() {
   full.onerror = () => {
     if (token !== viewerState.token) return;
     image.classList.remove('is-loading');
-    $('#imageStatus').textContent = '原图加载失败，可点击新窗口重试';
+    $('#imageStatus').textContent = 'Could not load the original image. Try opening it in a new tab.';
     $('#imageStatus').hidden = false;
   };
   full.src = item.原图;
@@ -807,11 +809,11 @@ function showViewer() {
   $('#viewerPosition').textContent = `${viewerState.index + 1} / ${currentList.length}`;
   $('#viewerTitle').textContent = item.姿势名称;
   $('#viewerId').textContent = item.id;
-  $('#copyId').textContent = '复制 ID';
-  $('#viewerMeta').innerHTML = [['体系', item.体系], ['姿势编号', item.姿势编号 || '—'], ['动作分类', item.分类 || '—'], ['当前视角', item.角度 || '—'], ['图片规格', '900 × 1200 PNG']].map(([key, value]) => `<dt>${key}</dt><dd>${esc(value)}</dd>`).join('');
+  $('#copyId').textContent = 'Copy ID';
+  $('#viewerMeta').innerHTML = [['Collection', item.体系], ['Pose number', item.姿势编号 || '—'], ['Category', item.分类 || '—'], ['Viewing angle', angleLabel(item.角度) || '—'], ['Image size', '900 × 1200 PNG']].map(([key, value]) => `<dt>${key}</dt><dd>${esc(value)}</dd>`).join('');
   $('#viewerAngles').innerHTML = ANGLES.filter(angle => group.angles[angle]).map(angle => {
     const angleItem = group.angles[angle];
-    return `<button class="angle-thumb${angleItem === item ? ' on' : ''}" type="button" data-angle="${esc(angle)}" aria-label="切换到${esc(angle)}"><img src="${esc(angleItem.缩略图)}" alt="${esc(angle)}"><span>${esc(angle)}</span></button>`;
+    return `<button class="angle-thumb${angleItem === item ? ' on' : ''}" type="button" data-angle="${esc(angle)}" aria-label="Switch to ${esc(angleLabel(angle))}"><img src="${esc(angleItem.缩略图)}" alt="${esc(angle)}"><span>${esc(angleLabel(angle))}</span></button>`;
   }).join('');
   const download = $('#downloadImage');
   download.href = item.原图;
@@ -850,9 +852,9 @@ $('#viewerAngles').addEventListener('click', event => {
 $('#copyId').addEventListener('click', async () => {
   try {
     await navigator.clipboard.writeText(viewerState.item.id);
-    $('#copyId').textContent = '已复制';
+    $('#copyId').textContent = 'Copied';
   } catch {
-    $('#copyId').textContent = '请手动复制';
+    $('#copyId').textContent = 'Please copy manually';
   }
 });
 
@@ -887,12 +889,12 @@ document.addEventListener('keydown', event => {
 
 const INFO = {
   guide: {
-    title: '使用指南',
-    html: '<ul><li>将参考图导入各类 AI 工具的<strong>姿势参考 / 构图参考</strong>功能。</li><li>同一姿势连续使用多个视角，更容易保持生成图片或视频中的姿态一致。</li><li>点击卡片或缩略图进入大图，可下载 <strong>900 × 1200 原尺寸 PNG</strong>，便于查看细节。</li><li>图片为无五官的灰色人体素体线稿，不包含面部、服装与背景，请通过提示词或其他参考图补充。</li><li>电脑端使用 <strong>← / →</strong> 切换角度，<strong>↑ / ↓</strong> 切换姿势；手机端可左右滑动大图。</li></ul>'
+    title: 'How to Use',
+    html: '<ul><li>Import a reference image into the <strong>pose reference / composition reference</strong> feature of your AI tool.</li><li>Using multiple angles of the same pose can help maintain consistent body positioning across generated images or videos.</li><li>Click a card or thumbnail to open the viewer and download the <strong>900 × 1200 full-size PNG</strong> for closer inspection.</li><li>Images are gray, faceless mannequin line drawings without clothing or backgrounds. Add those details through prompts or other references.</li><li>On desktop, use <strong>← / →</strong> to change angles and <strong>↑ / ↓</strong> to change poses. On mobile, swipe horizontally through the images.</li></ul>'
   },
   notice: {
-    title: '注意事项',
-    html: '<ul><li>原作者允许免费用于作品制作，包括商业作品、编辑加工与姿势参考。</li><li><strong>禁止对图片数据本身（原尺寸或加工后）进行再分发、转载或转售。</strong></li><li>署名不是必须的（可自愿标注）。图片元数据已删除，素材按无保证方式提供。</li><li>图中为人体素体线稿，并非真实人物。</li><li>请勿用于真实人物、未成年人相关用途或违反公序良俗的用途。</li></ul><div class="info-note">以上为原站注意事项的中文整理。完整条款以原作者发布内容为准；本镜像的公开展示与转载授权问题，请站点维护者另行确认。</div>'
+    title: 'Usage & Licensing',
+    html: '<ul><li>The original creator permits free use in creative works, including commercial work, editing, and pose reference.</li><li><strong>Redistribution, reposting, or resale of the image data itself—original or modified—is prohibited.</strong></li><li>Attribution is optional. Image metadata has been removed, and the materials are provided without warranty.</li><li>The images are mannequin line drawings, not real people.</li><li>Do not use the images in ways involving real people, minors, or unlawful or abusive purposes.</li></ul><div class=\"info-note\">This summary is based on the original site notice. The creator\'s published terms take precedence; the maintainers of this mirror should independently confirm permissions for public display and redistribution.</div>'
   }
 };
 
@@ -912,8 +914,8 @@ fetch('data/pose-zh.json')
   .then(prepareData)
   .catch(error => {
     console.error(error);
-    $('#resultCount').textContent = '图库加载失败';
-    grid.innerHTML = '<div class="empty"><h3>无法读取姿势数据</h3><p>请确认通过 HTTP 服务访问页面，并检查 data/pose-zh.json 是否存在。</p><button type="button" onclick="location.reload()">重新加载</button></div>';
+    $('#resultCount').textContent = 'Failed to load the library';
+    grid.innerHTML = '<div class="empty"><h3>Could not load pose data</h3><p>Make sure you are viewing this page through an HTTP server and that data/pose-zh.json exists.</p><button type="button" onclick="location.reload()">Reload</button></div>';
   });
 })();
 </script>
