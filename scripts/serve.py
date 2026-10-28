@@ -22,6 +22,13 @@ class QuietServer(http.server.ThreadingHTTPServer):
     allow_reuse_address = False
     daemon_threads = True
 
+    def server_bind(self) -> None:
+        # Windows can permit competing binds unless exclusive use is requested.
+        exclusive_option = getattr(socket, "SO_EXCLUSIVEADDRUSE", None)
+        if exclusive_option is not None:
+            self.socket.setsockopt(socket.SOL_SOCKET, exclusive_option, 1)
+        super().server_bind()
+
 
 def main() -> int:
     handler = lambda *args, **kwargs: http.server.SimpleHTTPRequestHandler(
