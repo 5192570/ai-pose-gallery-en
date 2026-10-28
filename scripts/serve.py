@@ -18,7 +18,8 @@ PORT_END = 8010
 
 
 class QuietServer(http.server.ThreadingHTTPServer):
-    allow_reuse_address = True
+    # Do not let this server claim a port that another application already uses.
+    allow_reuse_address = False
     daemon_threads = True
 
 
