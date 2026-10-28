@@ -12,6 +12,20 @@
 >
 > **Attribution and licensing:** The upstream repository states that the images and original data are not covered by its MIT license and remain the original creator's property. The MIT license applies only to the code and eligible project files; it does not grant rights to the image assets or original pose data. See [LICENSE](LICENSE) before reusing any content.
 
+## 🚀 Quick Start
+
+### 1. Download the app
+Download the latest ZIP package from **Releases** in the repository sidebar. Extract the ZIP file to a folder on your computer.
+
+### 2. Launch the app
+- **Windows:** Double-click `launch.bat`.
+- **macOS / Linux:** Run `launch.sh` from a terminal.
+
+**Python 3 is required.** The launcher will notify you if Python is missing.
+
+### 3. Start posing!
+The app will open in your default web browser. Keep the terminal window open while using the app; close it when you're finished to stop the local server.
+
 ## Screenshots
 
 | Desktop — Dark mode | Desktop — Light mode |
