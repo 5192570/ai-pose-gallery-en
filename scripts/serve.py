@@ -37,10 +37,20 @@ def main() -> int:
 
     server = None
     for port in range(PORT_START, PORT_END + 1):
+        # First check whether a service is already listening on this local port.
+        # Then attempt the actual bind as the authoritative availability check.
+        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as probe:
+            probe.settimeout(0.25)
+            if probe.connect_ex((HOST, port)) == 0:
+                print(f"Port {port} is already in use; checking the next port.")
+                continue
+
         try:
             server = QuietServer((HOST, port), handler)
+            print(f"Port {port} is available; using it.")
             break
-        except OSError:
+        except OSError as exc:
+            print(f"Port {port} could not be bound ({exc}); checking the next port.")
             continue
 
     if server is None:
