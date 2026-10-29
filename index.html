@@ -727,8 +727,8 @@ function updateCardPreview(card, entry) {
   const item = entry.item;
   const image = card.querySelector('.main-image');
   image.src = item.缩略图;
-  image.alt = `${entry.group.name} · ${item.角度}`;
-  card.querySelector('.angle-tag').textContent = item.角度;
+  image.alt = `${entry.group.name} · ${angleLabel(item.角度)}`;
+  card.querySelector('.angle-tag').textContent = angleLabel(item.角度);
   card.setAttribute('aria-label', `${entry.group.name}, ${angleLabel(item.角度)} angle`);
   card.querySelectorAll('.angle-thumb').forEach(button => button.classList.toggle('on', button.dataset.angle === item.角度));
 }
@@ -862,7 +862,7 @@ function showViewer() {
   const token = ++viewerState.token;
   const image = $('#viewerImage');
   image.src = item.缩略图;
-  image.alt = `${item.姿势名称} · ${item.角度}`;
+  image.alt = `${item.姿势名称} · ${angleLabel(item.角度)}`;
   image.classList.add('is-loading');
   $('#imageStatus').textContent = 'Loading original image…';
   $('#imageStatus').hidden = false;
