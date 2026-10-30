@@ -14,16 +14,29 @@
 
 ## 🚀 Quick Start
 
-### 1. Download the app
-Download the latest ZIP package from **Releases** in the repository sidebar. Extract the ZIP file to a folder on your computer.
+### Recommended: Clone the repository for the latest changes
+Using Git is the preferred way to get the latest updates and bug fixes. Install [Git](https://git-scm.com/downloads), then run:
 
-### 2. Launch the app
+```bash
+git clone https://github.com/5192570/ai-pose-gallery-en.git
+cd ai-pose-gallery-en
+```
+
+Then launch the app using the instructions below. To get later changes, run `git pull` from inside the cloned repository.
+
+### Alternative: Download the ZIP package
+Download the ZIP from **Releases** in the repository sidebar and extract it to a folder on your computer.
+
+> [!NOTE]
+> The release ZIP is a snapshot and may not include the latest changes or bug fixes. For the most up-to-date version, clone the repository using the instructions above.
+
+### Launch the app
 - **Windows:** Double-click `launch.bat`.
 - **macOS / Linux:** Run `launch.sh` from a terminal.
 
 **Python 3 is required.** The launcher will notify you if Python is missing.
 
-### 3. Start posing!
+### Start posing!
 The app will open in your default web browser. Keep the terminal window open while using the app; close it when you're finished to stop the local server.
 
 ## Screenshots
